@@ -12,7 +12,10 @@ app.use('/api/user', router);
 app.use('/api/blog', blogRouter);
 //setting mongodb to env
 mongoose
-    .connect(process.env.MONGO_URI)
+    .connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
     //setting port
     .then(() => app.listen(process.env.PORT || 5000))
     .then(() => console.log('connected to db and server'))
