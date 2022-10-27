@@ -1,5 +1,8 @@
 {
     "name": "backend",
+    "engines": {
+        "node": "17.0.1"
+    },
     "version": "1.0.0",
     "description": "Blog App",
     "main": "app.js",
