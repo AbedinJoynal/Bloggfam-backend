@@ -12,18 +12,15 @@ app.use('/api/user', router);
 app.use('/api/blog', blogRouter);
 //setting mongodb to env
 mongoose
-    .connect(
-        process.env.MONGO_URI
-    )
+    .connect(process.env.MONGO_URI)
     //setting port
     .then(() => app.listen(process.env.PORT || 5000))
     .then(() => console.log('connected to db and server'))
     .catch((err) => console.log(err));
-
-    if(process.env.NODE_ENV === 'production'){
-        app.use(express.static('frontend/build'));
-        app.get('*', (req, res) => {
-            res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-        })
-    }
-
+//setting build
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('/frontend/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, '/frontend/build', 'index.html'));
+    });
+}
