@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => {
-    res.json("server is connected")
+    res.json("server is connected now")
 })
 app.use('/api/user', router);
 app.use('/api/blog', blogRouter);
