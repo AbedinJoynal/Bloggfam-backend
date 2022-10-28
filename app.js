@@ -9,8 +9,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.get('/', (req, res) => {
-    res.json("server is connected now")
-})
+    res.json('server is connected now');
+});
 app.use('/api/user', router);
 app.use('/api/blog', blogRouter);
 const DB = process.env.MONGO_URI;
