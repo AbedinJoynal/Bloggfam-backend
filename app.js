@@ -18,4 +18,5 @@ mongoose
     .connect(DB)
     .then(() => app.listen(process.env.PORT || 5000))
     .then(() => console.log('connected to db and server'))
+    
     .catch((err) => console.log(err));
