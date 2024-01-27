@@ -1,4 +1,4 @@
-import User from '../model/User';
+import User from '../model/User.js';
 import bcrypt from 'bcryptjs';
 export const getAllUsers = async (req, res, next) => {
     let users;
@@ -14,32 +14,25 @@ export const getAllUsers = async (req, res, next) => {
 };
 export const signup = async (req, res, next) => {
     const { name, email, password } = req.body;
-    let existingUser;
     try {
-        existingUser = await User.findOne({ email });
-    } catch (err) {
-        return console.error(err);
-    }
-    if (existingUser) {
-        return res
-            .status(400)
-            .json({ message: 'User already exists! Login instead.' });
-    }
-    const hashedPassword = bcrypt.hashSync(password);
-
-    const user = new User({
-        name,
-        email,
-        password: hashedPassword,
-        blogs: [],
-    });
-
-    try {
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res
+                .status(400)
+                .json({ message: 'User already exists! Login instead.' });
+        }
+        const hashedPassword = await bcrypt.hash(password, 12);
+        const user = new User({
+            name,
+            email,
+            password: hashedPassword,
+            blogs: [],
+        });
         await user.save();
+        res.status(201).json({ user });
     } catch (err) {
-        return console.error(err);
+        res.status(500).json({ message: 'Something went wrong' });
     }
-    return res.status(201).json({ user });
 };
 
 export const login = async (req, res, next) => {
